@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace FilRouge.DataAccessLayer.Models
 {
-    class DifficultyLevel
+    public class DifficultyLevel
     {
         [Key]
         public int Id { get; set; }

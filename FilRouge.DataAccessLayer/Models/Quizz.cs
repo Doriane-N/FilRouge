@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace FilRouge.DataAccessLayer.Models
 {
-    class Quizz
+    public class Quizz
     {
         [Key]
         [StringLength(10)]

@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace FilRouge.DataAccessLayer.Models
 {
-    class Answer
+    public class Answer
     {
         [Key]
         public int Id { get; set; }

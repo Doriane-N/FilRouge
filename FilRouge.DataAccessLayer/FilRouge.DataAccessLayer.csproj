@@ -51,6 +51,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AccessLayers\QuestionAccessLayer.cs" />
+    <Compile Include="AccessLayers\UserAccessLayer.cs" />
     <Compile Include="Context\FilRougeContext.cs" />
     <Compile Include="Migrations\202106051354499_InitialCreate.cs" />
     <Compile Include="Migrations\202106051354499_InitialCreate.designer.cs">
@@ -84,6 +86,7 @@
       <DependentUpon>202106051355364_CreateTables.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
