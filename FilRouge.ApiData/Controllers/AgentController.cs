@@ -14,13 +14,13 @@ namespace FilRouge.ApiData.Controllers
     {
         private readonly RecruitmentAgentAccessLayer recruitmentAgentAccessLayer = new RecruitmentAgentAccessLayer();
 
-        // GET api/agent/login
+        // GET api/agent
         [HttpGet]
-        public IHttpActionResult Get(string login)
+        public IHttpActionResult Get(string login, String psw)
         {
             var usersFound = recruitmentAgentAccessLayer.GetAll();
 
-            var result = usersFound.Where(u => u.Login.Equals(login)).FirstOrDefault();
+            var result = usersFound.Where(u => u.Login.Equals(login) && u.Password.Equals(psw)).FirstOrDefault();
   
             return this.Ok(result);
 

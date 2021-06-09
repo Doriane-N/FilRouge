@@ -10,6 +10,10 @@ namespace FilRouge.Web.Controllers
     {
         public ActionResult Index()
         {
+            if(Session["Login"] == null)
+            {
+                return RedirectToAction("Login", "Agent");
+            }
             return View();
         }
 

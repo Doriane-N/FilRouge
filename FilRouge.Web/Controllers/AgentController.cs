@@ -29,12 +29,15 @@ namespace FilRouge.Web.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Login(RecruitmentAgent agent)
         {
-            var foundAgent = await agentService.Get(agent.Login);
+            var foundAgent = await agentService.Get(agent.Login, agent.Password);
 
-            if (foundAgent != null && foundAgent.Password.Equals(agent.Password))
+            if (foundAgent != null)
             {
                 Session["Login"] = foundAgent.Login.ToString();
-                Session["isAdmin"] = foundAgent.IsAdmin;
+                if (foundAgent.IsAdmin)
+                {
+                    Session["Admin"] = foundAgent.Login.ToString();
+                }
                 return RedirectToAction("Index" , "Home");
 
             }

@@ -19,9 +19,9 @@ namespace FilRouge.Web.Services
             this.httpClient.BaseAddress = new Uri("https://localhost:44300"); //URI à changer
         }
 
-        public async Task<RecruitmentAgent> Get(string login)
+        public async Task<RecruitmentAgent> Get(string login, String psw)
         {
-            var response = await this.httpClient.GetAsync($"/api/agent?login={login}");
+            var response = await this.httpClient.GetAsync($"/api/agent?login={login}&psw={psw}");
             if (response.IsSuccessStatusCode)
             {
                 string responseBody = await response.Content.ReadAsStringAsync();
