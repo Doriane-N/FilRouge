@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace FilRouge.DataAccessLayer.Context
 {
-    internal class FilRougeContext : DbContext
+    public class FilRougeContext : DbContext
     {
 
         public FilRougeContext() : base("FilRougeContext")
@@ -26,5 +26,6 @@ namespace FilRouge.DataAccessLayer.Context
         internal DbSet<Report> Reports { get; set; }
         internal DbSet<User> Users { get; set; }
 
+       
     }
 }
