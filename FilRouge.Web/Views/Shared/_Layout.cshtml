@@ -7,7 +7,6 @@
     <title>@ViewBag.Title - Mon application ASP.NET</title>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
-
 </head>
 <body>
     <div class="navbar navbar-inverse navbar-fixed-top">
@@ -22,15 +21,10 @@
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    @*<li>@Html.ActionLink("Accueil", "Index", "Home")</li>
-        <li>@Html.ActionLink("À propos de", "About", "Home")</li>
-        <li>@Html.ActionLink("Contact", "Contact", "Home")</li>*@
-                    @if (User.Identity.IsAuthenticated && Roles.IsUserInRole(User.Identity.Name, "admin"))
-                    {
-                        <li>@Html.ActionLink("Créer un utilisateur", "Register", "Account")</li>
-                    }
+                    <li>@Html.ActionLink("Accueil", "Index", "Home")</li>
+                    <li>@Html.ActionLink("À propos de", "About", "Home")</li>
+                    <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
                 </ul>
-                @Html.Partial("_LoginPartial")
             </div>
         </div>
     </div>
