@@ -16,7 +16,7 @@ namespace FilRouge.Web.Services
         public AgentService()
         {
             this.httpClient = new HttpClient();
-            this.httpClient.BaseAddress = new Uri("https://localhost:44300"); //URI à changer
+            this.httpClient.BaseAddress = new Uri("https://localhost:44300");
         }
 
         public async Task<RecruitmentAgent> Get(string login, String psw)
@@ -30,8 +30,6 @@ namespace FilRouge.Web.Services
             }
             return null;
         }
-
-            //var pizzas = JsonConvert.DeserializeObject<List<Pizza>>(responseBody);
 
 
             //public Pizza Get(int id)

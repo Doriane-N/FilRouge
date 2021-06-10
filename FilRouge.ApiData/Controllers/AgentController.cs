@@ -16,7 +16,7 @@ namespace FilRouge.ApiData.Controllers
 
         // GET api/agent
         [HttpGet]
-        public IHttpActionResult Get(string login, String psw)
+        public IHttpActionResult Get(string login, string psw)
         {
             var usersFound = recruitmentAgentAccessLayer.GetAll();
 

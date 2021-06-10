@@ -23,8 +23,7 @@ namespace FilRouge.Web.Controllers
             return View();
         }
 
-        
-
+        //Méthode de connexion, création du "Session"
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Login(RecruitmentAgent agent)
@@ -33,20 +32,28 @@ namespace FilRouge.Web.Controllers
 
             if (foundAgent != null)
             {
-                Session["Login"] = foundAgent.Login.ToString();
+                Session["Login"] = $"{foundAgent.User.FirstName.ToString()} {foundAgent.User.LastName.ToString()}";
                 if (foundAgent.IsAdmin)
                 {
-                    Session["Admin"] = foundAgent.Login.ToString();
+                    Session["Admin"] = true;
                 }
+
                 return RedirectToAction("Index" , "Home");
 
             }
 
-            // TODO to disconnect Session["Login"] = null
-            // TODO to disconnect Session["isAdmin"] = null
+            ModelState.AddModelError("", "Tentative de connexion non valide.");
 
             return View(agent);
         }
 
+        //Méthode de déconnexion
+        public ActionResult Logout()
+        {
+            Session["Login"] = null;
+            Session["Admin"] = null;
+
+            return RedirectToAction("Login", "Agent");
+        }
     }
 }
