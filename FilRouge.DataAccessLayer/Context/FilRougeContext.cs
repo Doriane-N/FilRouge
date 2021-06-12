@@ -26,6 +26,6 @@ namespace FilRouge.DataAccessLayer.Context
         internal DbSet<Report> Reports { get; set; }
         internal DbSet<User> Users { get; set; }
 
-       
+        
     }
 }

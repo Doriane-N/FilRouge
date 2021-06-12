@@ -20,7 +20,7 @@
                 @Html.ActionLink("Fil Rouge", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
             </div>
             <div class="navbar-collapse collapse">
-
+                
                 @if (Session["Login"] != null)
                 {
                     <ul class="nav navbar-nav">
@@ -28,8 +28,9 @@
                 <li>@Html.ActionLink("À propos de", "About", "Home")</li>
                         <li>@Html.ActionLink("Contact", "Contact", "Home")</li>*@
                     </ul>
-
+                
                     <ul class="nav navbar-nav navbar-right">
+                        <li>@Html.ActionLink("Liste des Quiz", "Index", "Report")</li>
                         <li>@Html.ActionLink("Se déconnecter", "Logout", "Agent")</li>
                     </ul>
                 }
