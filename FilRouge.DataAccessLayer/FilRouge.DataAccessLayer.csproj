@@ -63,9 +63,9 @@
     <Compile Include="Migrations\202106051355364_CreateTables.designer.cs">
       <DependentUpon>202106051355364_CreateTables.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202106121621561_RequiredProperties.cs" />
-    <Compile Include="Migrations\202106121621561_RequiredProperties.designer.cs">
-      <DependentUpon>202106121621561_RequiredProperties.cs</DependentUpon>
+    <Compile Include="Migrations\202106131039340_RequiredProperties.cs" />
+    <Compile Include="Migrations\202106131039340_RequiredProperties.designer.cs">
+      <DependentUpon>202106131039340_RequiredProperties.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Answer.cs" />
@@ -89,9 +89,10 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202106051355364_CreateTables.resx">
       <DependentUpon>202106051355364_CreateTables.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202106121621561_RequiredProperties.resx">
-      <DependentUpon>202106121621561_RequiredProperties.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202106131039340_RequiredProperties.resx">
+      <DependentUpon>202106131039340_RequiredProperties.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup />

@@ -15,18 +15,8 @@ namespace FilRouge.ApiData.Controllers
     public class AgentsController : ApiController
     {
         private readonly RecruitmentAgentAccessLayer recruitmentAgentAccessLayer = new RecruitmentAgentAccessLayer();
+        private readonly UserAccessLayer userAccessLayer = new UserAccessLayer();
 
-        // GET api/agent
-        [HttpGet]
-        public IHttpActionResult Get(string login, string psw)
-        {
-            var usersFound = recruitmentAgentAccessLayer.GetAll();
-
-            var result = usersFound.Where(u => u.Login.Equals(login) && u.Password.Equals(psw)).FirstOrDefault();
-  
-            return this.Ok(result);
-
-        }
 
         // GET api/agent
         [HttpGet]
@@ -37,7 +27,17 @@ namespace FilRouge.ApiData.Controllers
             var result = usersFound.Where(u => u.Login.Equals(login)).FirstOrDefault();
 
             return this.Ok(result);
+        }
 
+        // GET api/agent
+        [HttpGet]
+        public IHttpActionResult Get(int id)
+        {
+            var usersFound = recruitmentAgentAccessLayer.GetAll();
+
+            var result = usersFound.Where(u => u.Id.Equals(id)).FirstOrDefault();
+
+            return this.Ok(result);
         }
 
         // GET api/agents
@@ -81,6 +81,47 @@ namespace FilRouge.ApiData.Controllers
             return this.Ok("created");
         }
 
+        [HttpPut]
+        public async Task<IHttpActionResult> Update(int id, [FromBody] RecruitmentAgent agent)
+        {
+            //Autre agent a déjà ce login ?
+            var foundAgent = recruitmentAgentAccessLayer.Get(agent.Login);
+            if (foundAgent != null && foundAgent.Id != id)
+            {
+                return this.Conflict();
+            }
 
+            var agentToUpdate = new DataAccessLayer.Models.RecruitmentAgent
+            {
+                Id = agent.Id,
+                IsAdmin = agent.IsAdmin,
+                Login = agent.Login,
+                User = new User
+                {
+                    FirstName = agent.User.FirstName,
+                    LastName = agent.User.LastName,
+                    Email = agent.User.Email
+                },
+            };
+
+            await recruitmentAgentAccessLayer.UpdateAsync(agentToUpdate);
+
+            return this.Ok("updated");
+        }
+
+        [HttpDelete]
+        public async Task<IHttpActionResult> Delete(int id)
+        {
+            var agentToDelete = recruitmentAgentAccessLayer.Get(id);
+
+            if (agentToDelete == null)
+            {
+                return this.NotFound();
+            }
+
+            await recruitmentAgentAccessLayer.DeleteAsync(id);
+            await userAccessLayer.DeleteAsync(agentToDelete.User.Id);
+            return this.Ok("Delete");
+        }
     }
 }

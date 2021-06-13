@@ -29,6 +29,13 @@ namespace FilRouge.DataAccessLayer.AccessLayers
             return result > 0;
         }
 
+        public async Task<bool> DeleteAsync(int id)
+        {
+            var agentToRemove = this.users.AsQueryable().FirstOrDefault(p => p.Id == id);
+            this.users.Remove(agentToRemove);
+            var result = await this.context.SaveChangesAsync().ConfigureAwait(false);
 
+            return result > 0;
+        }
     }
 }

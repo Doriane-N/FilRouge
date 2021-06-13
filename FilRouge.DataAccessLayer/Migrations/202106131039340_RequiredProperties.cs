@@ -36,7 +36,7 @@
             AlterColumn("dbo.Quizzs", "Candidate_Id", c => c.Int(nullable: false));
             AlterColumn("dbo.Quizzs", "RecruitmentAgent_Id", c => c.Int(nullable: false));
             AlterColumn("dbo.RecruitmentAgents", "Login", c => c.String(nullable: false, maxLength: 50));
-            AlterColumn("dbo.RecruitmentAgents", "Password", c => c.String(nullable: false, maxLength: 50));
+            AlterColumn("dbo.RecruitmentAgents", "Password", c => c.String(nullable: false, maxLength: 255));
             AlterColumn("dbo.Reports", "Quizz_Id", c => c.String(nullable: false, maxLength: 10));
             CreateIndex("dbo.AnswerPercentLevels", "DifficultyLevel_Id1");
             CreateIndex("dbo.AnswerPercentLevels", "Report_Id");

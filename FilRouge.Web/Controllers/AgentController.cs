@@ -7,11 +7,13 @@ using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web;
+using System.Web.Helpers;
 using System.Web.Mvc;
 using FilRouge.DataAccessLayer.AccessLayers;
 using FilRouge.DataAccessLayer.Context;
 using FilRouge.DataAccessLayer.Models;
 using FilRouge.Web.Services;
+
 
 namespace FilRouge.Web.Controllers
 {
@@ -31,11 +33,13 @@ namespace FilRouge.Web.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Login(RecruitmentAgent agent)
         {
-            var foundAgent = await agentService.Get(agent.Login, agent.Password);
+            var foundAgent = await agentService.Get(agent.Login);
 
-            if (foundAgent != null)
+            if (foundAgent != null && Crypto.VerifyHashedPassword(foundAgent.Password, agent.Password)) 
             {
-                Session["Login"] = $"{foundAgent.User.FirstName.ToString()} {foundAgent.User.LastName.ToString()}";
+                Session["Login"] = foundAgent.Login.ToString();
+                Session["Id"] = foundAgent.Id.ToString();
+                Session["Name"] = $"{foundAgent.User.FirstName.ToString()} {foundAgent.User.LastName.ToString()}";
                 if (foundAgent.IsAdmin)
                 {
                     Session["Admin"] = "admin";
@@ -53,7 +57,9 @@ namespace FilRouge.Web.Controllers
         //Méthode de déconnexion
         public ActionResult Logout()
         {
+            Session["Name"] = null;
             Session["Login"] = null;
+            Session["Id"] = null;
             Session["Admin"] = null;
 
             return RedirectToAction("Login", "Agent");
@@ -90,6 +96,9 @@ namespace FilRouge.Web.Controllers
         {
             if (ModelState.IsValid)
             {
+                var hash = Crypto.HashPassword(agent.Password);
+                agent.Password = hash;
+
                 HttpResponseMessage response = await agentService.Create(agent);
                 if (response.IsSuccessStatusCode)
                 {
@@ -107,8 +116,110 @@ namespace FilRouge.Web.Controllers
                 }
 
             }
+            return View(agent);
+        }
+
+        // GET: Agents/Edit/{id}
+        public async Task<ActionResult> Edit(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
+            var agent = await agentService.Get((int) id);
+            if (agent == null)
+            {
+                return HttpNotFound();
+            }
 
             return View(agent);
+        }
+
+        // POST: Agents/Edit/{id}
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> Edit(RecruitmentAgent agent)
+        {
+            HttpResponseMessage response = await agentService.Update(agent.Id, agent);
+            if (response.IsSuccessStatusCode)
+            {
+                return RedirectToAction("Manage");
+            }
+            else
+            {
+                if (response.StatusCode.Equals(HttpStatusCode.Conflict))
+                {
+                    ModelState.AddModelError(nameof(RecruitmentAgent.Login), "Login existe déjà");
+                }
+                else
+                {
+                    ModelState.AddModelError("", "La modification n'a pas été effectuée");
+                }
+            }
+
+            return View(agent);
+        }
+
+        // GET: Agents/EditPassword
+        public async Task<ActionResult> EditPassword()
+        {
+            var agent = await agentService.Get(Int32.Parse(Session["Id"].ToString()));
+            if (agent == null)
+            {
+                return HttpNotFound();
+            }
+
+            return View(agent);
+        }
+
+        //Méthode de modification du mot de passe accessible par l'agent
+        // POST: Agents/EditPassword
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        //public async Task<ActionResult> EditPassword()
+        //{
+        //    if (ModelState.IsValid)
+        //    {
+        //        HttpResponseMessage response = await agentService.Update(agent);
+
+        //        if (response.StatusCode.Equals(HttpStatusCode.Conflict))
+        //        {
+        //            ModelState.AddModelError(nameof(RecruitmentAgent.Login), "Login existe déjà");
+        //        }
+        //        else
+        //        {
+        //            ModelState.AddModelError("", "L'ajout n'a pas été effectué");
+        //        }
+
+        //    }
+
+        //    return View(agent);
+        //}
+
+        // GET: Agents/Delete/{id}
+        public async Task<ActionResult> Delete(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
+            var agent = await agentService.Get((int) id);
+            if (agent == null)
+            {
+                return HttpNotFound();
+            }
+            return View(agent);
+        }
+
+        // POST: Agents/Delete/{id}
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> DeleteConfirmed(int id)
+        {
+            await agentService.Delete(id).ConfigureAwait(false);
+            return RedirectToAction("Manage");
         }
     }
 }

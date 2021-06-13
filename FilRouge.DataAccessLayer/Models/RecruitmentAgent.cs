@@ -22,11 +22,12 @@ namespace FilRouge.DataAccessLayer.Models
         [Required]
         [Index(IsUnique = true)]
         [MaxLength(50)]
+        [RegularExpression(@"^[a-zA-Z0-9.-]+$", ErrorMessage = "Caractères autorisés : lettres, chiffres, '.' et '-'")]
         public string Login { get; set; }
 
         [Required]
         [Display(Name = "Mot de passe")]
-        [DataType(DataType.Password), MaxLength(50)]
+        [DataType(DataType.Password), MaxLength(255)]
         public string Password { get; set; }
 
         public ICollection<Quizz> Quizzs { get; set; }

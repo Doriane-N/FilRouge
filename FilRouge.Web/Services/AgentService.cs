@@ -20,9 +20,9 @@ namespace FilRouge.Web.Services
             this.httpClient.BaseAddress = new Uri("https://localhost:44300");
         }
 
-        public async Task<RecruitmentAgent> Get(string login, String psw)
+        public async Task<RecruitmentAgent> Get(string login)
         {
-            var response = await this.httpClient.GetAsync($"/api/agents?login={login}&psw={psw}");
+            var response = await this.httpClient.GetAsync($"/api/agents?login={login}");
             if (response.IsSuccessStatusCode)
             {
                 string responseBody = await response.Content.ReadAsStringAsync();
@@ -32,9 +32,9 @@ namespace FilRouge.Web.Services
             return null;
         }
 
-        public async Task<RecruitmentAgent> Get(string login)
+        public async Task<RecruitmentAgent> Get(int id)
         {
-            var response = await this.httpClient.GetAsync($"/api/agents?login={login}");
+            var response = await this.httpClient.GetAsync($"/api/agents/{id}");
             if (response.IsSuccessStatusCode)
             {
                 string responseBody = await response.Content.ReadAsStringAsync();
@@ -65,6 +65,26 @@ namespace FilRouge.Web.Services
             var response = await this.httpClient.PostAsync($"/api/agents", content);
 
             return response;
+        }
+
+        public async Task<HttpResponseMessage> Update(int id, RecruitmentAgent agent)
+        {
+            var content = new StringContent(JsonConvert.SerializeObject(agent), Encoding.UTF8, "application/json");
+            var response = await this.httpClient.PutAsync($"/api/agents/{id}", content);
+
+            return response;
+        }
+
+        public async Task<bool> Delete(int id)
+        {
+            var response = await this.httpClient.DeleteAsync($"/api/agents/{id}");
+
+            if (response.IsSuccessStatusCode)
+            {
+                return true;
+            }
+
+            return false;
         }
     }
 
