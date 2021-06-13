@@ -11,6 +11,8 @@ namespace FilRouge.DataAccessLayer.Models
     {
         [Key]
         public int Id { get; set; }
+
+        [Required]
         [MaxLength(50)]
         public string Level { get; set; }
 

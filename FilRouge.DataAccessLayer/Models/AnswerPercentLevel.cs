@@ -13,8 +13,13 @@ namespace FilRouge.DataAccessLayer.Models
         [Key]
         public int Id { get; set; }
 
+        [Required]
         public Report Report { get; set; }
+
+        [Required]
         public DifficultyLevel DifficultyLevel { get; set; }
+
+        [Required]
         public int GoodAnswersPercent { get; set; }
     }
 }

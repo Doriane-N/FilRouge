@@ -12,9 +12,15 @@ namespace FilRouge.DataAccessLayer.Models
     {
         [Key]
         public int Id { get; set; }
+
+        [Required]
         [MaxLength(1000)]
         public string Text { get; set; }
+
+        [Required]
         public bool IsGood { get; set; }
+
+        [Required]
         public Question Question { get; set; }
 
         public ICollection<Quizz> Quizzs { get; set; }

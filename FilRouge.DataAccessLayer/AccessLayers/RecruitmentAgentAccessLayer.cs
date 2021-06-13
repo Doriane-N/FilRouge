@@ -36,6 +36,12 @@ namespace FilRouge.DataAccessLayer.AccessLayers
                 .ToList();
         }
 
+        public async Task<bool> AddAsync(RecruitmentAgent agent)
+        {
+            this.recruitmentAgents.Add(agent);
+            var result = await this.context.SaveChangesAsync().ConfigureAwait(false);
 
+            return result > 0;
+        }
     }
 }

@@ -13,10 +13,19 @@ namespace FilRouge.DataAccessLayer.Models
         [Key]
         public int Id { get; set; }
 
+        [Required]
         public User User { get; set; }
+
+        [Required]
         public bool IsAdmin { get; set; }
+
+        [Required]
+        [Index(IsUnique = true)]
         [MaxLength(50)]
         public string Login { get; set; }
+
+        [Required]
+        [Display(Name = "Mot de passe")]
         [DataType(DataType.Password), MaxLength(50)]
         public string Password { get; set; }
 

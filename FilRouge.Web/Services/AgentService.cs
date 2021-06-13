@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
+using System.Text;
 using System.Threading.Tasks;
 using System.Web;
 
@@ -21,7 +22,7 @@ namespace FilRouge.Web.Services
 
         public async Task<RecruitmentAgent> Get(string login, String psw)
         {
-            var response = await this.httpClient.GetAsync($"/api/agent?login={login}&psw={psw}");
+            var response = await this.httpClient.GetAsync($"/api/agents?login={login}&psw={psw}");
             if (response.IsSuccessStatusCode)
             {
                 string responseBody = await response.Content.ReadAsStringAsync();
@@ -31,33 +32,40 @@ namespace FilRouge.Web.Services
             return null;
         }
 
+        public async Task<RecruitmentAgent> Get(string login)
+        {
+            var response = await this.httpClient.GetAsync($"/api/agents?login={login}");
+            if (response.IsSuccessStatusCode)
+            {
+                string responseBody = await response.Content.ReadAsStringAsync();
+                var agent = JsonConvert.DeserializeObject<RecruitmentAgent>(responseBody);
+                return agent;
+            }
+            return null;
+        }
 
-            //public Pizza Get(int id)
-            //{
-            //    var response = this.httpClient.Exists($"/api/pizzas/{id}");
+        public async Task<IList<RecruitmentAgent>> GetAll()
+        {
+            var response = await this.httpClient.GetAsync("/api/agents");
 
-            //    if (response.IsSuccessStatusCode)
-            //    {
-            //        string responseBody = response.Content.ReadAsStringAsync();
-            //        var pizza = JsonConvert.DeserializeObject<Pizza>(responseBody);
+            if (response.IsSuccessStatusCode)
+            {
+                string responseBody = await response.Content.ReadAsStringAsync();
+                var agents = JsonConvert.DeserializeObject<List<RecruitmentAgent>>(responseBody);
 
-            //        return pizza;
-            //    }
+                return agents;
+            }
 
-            //    return null;
-            //}
+            return new List<RecruitmentAgent>();
+        }
 
-            //public async Task<bool> Create(Pizza pizza)
-            //{
-            //    var content = new StringContent(JsonConvert.SerializeObject(pizza), Encoding.UTF8, "application/json");
-            //    var response = await this.httpClient.PostAsync($"/api/pizzas", content);
+        public async Task<HttpResponseMessage> Create(RecruitmentAgent agent)
+        {
+            var content = new StringContent(JsonConvert.SerializeObject(agent), Encoding.UTF8, "application/json");
+            var response = await this.httpClient.PostAsync($"/api/agents", content);
 
-            //    if (response.IsSuccessStatusCode)
-            //    {
-            //        return true;
-            //    }
-
-            //    return false;
-            //}
+            return response;
         }
     }
+
+}

@@ -3,11 +3,9 @@
 }
 
 
-@if (Session["Login"] != null)
-{
     <h3>Hello @Session["Login"]</h3>
 
-    if (Session["Admin"] != null)
+    @if (Session["Admin"] != null)
     {
         <p>You are admin</p>
     }
@@ -18,7 +16,6 @@
 
 <p>(TODO Dashboard)</p>
 
-}
 
 
 @*<div class="jumbotron">

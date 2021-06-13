@@ -4,6 +4,7 @@ using System.Data;
 using System.Data.Entity;
 using System.Linq;
 using System.Net;
+using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
@@ -17,6 +18,8 @@ namespace FilRouge.Web.Controllers
     public class AgentController : Controller
     {
         private readonly AgentService agentService = new AgentService();
+
+        public bool alreadyExist { get; set; }
 
         public ActionResult Login()
         {
@@ -35,10 +38,10 @@ namespace FilRouge.Web.Controllers
                 Session["Login"] = $"{foundAgent.User.FirstName.ToString()} {foundAgent.User.LastName.ToString()}";
                 if (foundAgent.IsAdmin)
                 {
-                    Session["Admin"] = true;
+                    Session["Admin"] = "admin";
                 }
 
-                return RedirectToAction("Index" , "Home");
+                return RedirectToAction("Index", "Home");
 
             }
 
@@ -54,6 +57,58 @@ namespace FilRouge.Web.Controllers
             Session["Admin"] = null;
 
             return RedirectToAction("Login", "Agent");
+        }
+
+
+        // GET: Agents // Affiche la liste des agents de recrutement
+        public async Task<ActionResult> Manage()
+        {
+            return await AuthenticationController.GetInstance().AuthenticationAdminAsync(
+                async () =>
+                {
+                    var list = await agentService.GetAll();
+                    return View(list);
+                }
+            );
+        }
+
+        // GET: Agents/Create
+        public async Task<ActionResult> Create()
+        {
+            return await AuthenticationController.GetInstance().AuthenticationAdminAsync(
+                async () =>
+                {
+                    return View();
+                }
+            );
+        }
+
+        // POST: Agents/Create
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> Create(RecruitmentAgent agent)
+        {
+            if (ModelState.IsValid)
+            {
+                HttpResponseMessage response = await agentService.Create(agent);
+                if (response.IsSuccessStatusCode)
+                {
+                    return RedirectToAction("Manage");
+                } else
+                {
+                    if (response.StatusCode.Equals(HttpStatusCode.Conflict))
+                    {
+                        ModelState.AddModelError(nameof(RecruitmentAgent.Login), "Login existe déjà");
+                    }
+                    else
+                    {
+                        ModelState.AddModelError("", "L'ajout n'a pas été effectué");
+                    }
+                }
+
+            }
+
+            return View(agent);
         }
     }
 }

@@ -12,9 +12,14 @@ namespace FilRouge.DataAccessLayer.Models
     {
         [Key]
         public int Id { get; set; }
+
+        [Required]
         public Quizz Quizz { get; set; }
+
+        [Required]
         public int GlobalGoodAnswersPercent { get; set; }
 
+        [Required]
         public ICollection<AnswerPercentLevel> AnswerPercentLevels { get; set; }
     }
 }

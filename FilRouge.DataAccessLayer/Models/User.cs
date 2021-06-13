@@ -11,10 +11,18 @@ namespace FilRouge.DataAccessLayer.Models
     {
         [Key]
         public int Id { get; set; }
+
+        [Required]
+        [Display(Name = "Nom")]
         [MaxLength(50)]
         public string LastName { get; set; }
+
+        [Required]
+        [Display(Name = "Prénom")]
         [MaxLength(50)]
         public string FirstName { get; set; }
+
+        [Required]
         [DataType(DataType.EmailAddress), MaxLength(100)]
         public string Email { get; set; }
 

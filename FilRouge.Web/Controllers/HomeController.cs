@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 
@@ -10,11 +11,13 @@ namespace FilRouge.Web.Controllers
     {
         public ActionResult Index()
         {
-            if(Session["Login"] == null)
-            {
-                return RedirectToAction("Login", "Agent");
-            }
-            return View();
+            return AuthenticationController.GetInstance().AuthenticationAgent(
+                 () =>
+                {
+                    return View();
+                }
+            );
+
         }
 
         public ActionResult About()

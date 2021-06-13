@@ -63,6 +63,10 @@
     <Compile Include="Migrations\202106051355364_CreateTables.designer.cs">
       <DependentUpon>202106051355364_CreateTables.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202106121621561_RequiredProperties.cs" />
+    <Compile Include="Migrations\202106121621561_RequiredProperties.designer.cs">
+      <DependentUpon>202106121621561_RequiredProperties.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Answer.cs" />
     <Compile Include="Models\AnswerPercentLevel.cs" />
@@ -85,6 +89,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202106051355364_CreateTables.resx">
       <DependentUpon>202106051355364_CreateTables.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202106121621561_RequiredProperties.resx">
+      <DependentUpon>202106121621561_RequiredProperties.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup />

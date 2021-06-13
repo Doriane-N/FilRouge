@@ -26,6 +26,34 @@ namespace FilRouge.DataAccessLayer.Context
         internal DbSet<Report> Reports { get; set; }
         internal DbSet<User> Users { get; set; }
 
-       
+        //Disable Delete on cascade for Difficulty Level
+        protected override void OnModelCreating(DbModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Quizz>()
+                .HasOptional(q => q.DifficultyLevel)
+                .WithOptionalDependent()
+                .WillCascadeOnDelete(false);
+            modelBuilder.Entity<Candidate>()
+                .HasOptional(c => c.DifficultyLevel)
+                .WithOptionalDependent()
+                .WillCascadeOnDelete(false);
+            modelBuilder.Entity<Question>()
+                .HasOptional(q => q.DifficultyLevel)
+                .WithOptionalDependent()
+                .WillCascadeOnDelete(false);
+            modelBuilder.Entity<AnswerPercentLevel>()
+                .HasOptional(a => a.DifficultyLevel)
+                .WithOptionalDependent()
+                .WillCascadeOnDelete(false);
+            modelBuilder.Entity<RecruitmentAgent>()
+                .HasOptional(r => r.User)
+                .WithOptionalDependent()
+                .WillCascadeOnDelete(false);
+            modelBuilder.Entity<Candidate>()
+                .HasOptional(c => c.User)
+                .WithOptionalDependent()
+                .WillCascadeOnDelete(false);
+        }
+
     }
 }
