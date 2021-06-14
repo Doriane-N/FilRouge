@@ -25,7 +25,7 @@ namespace FilRouge.DataAccessLayer.AccessLayers
             return this.report.AsQueryable().AsNoTracking()
                 .Include(a => a.Report)
                 .Include(a => a.RecruitmentAgent)
-                .Include(a=>a.RecruitmentAgent)
+                .Include(a => a.DifficultyLevel)
                 .Include(a => a.Candidate)
                 .ToList();
         }
