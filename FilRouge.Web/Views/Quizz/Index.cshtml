@@ -1,0 +1,79 @@
+﻿@model IEnumerable<FilRouge.DataAccessLayer.Models.Quizz>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            Lastname
+        </th>
+        <th>
+            Firstname
+        </th>
+        <th>
+            Difficulty level
+        </th>
+        <th>
+            Global Good Answers Percent
+        </th>
+        <th>
+            Good Answers Percent per level
+        </th>
+        <th>
+            Startdate
+        </th>
+        <th>
+            Endate
+        </th>
+        <th>
+            Creator Lastname
+        </th>
+    </tr>
+
+@foreach (var item in Model) {
+<tr>
+    <td>
+        @Html.DisplayFor(modelItem => item.Candidate.User.LastName)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.Candidate.User.FirstName)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.DifficultyLevel.Level)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.Report.GlobalGoodAnswersPercent)
+    </td>
+    <td>
+        <ul>
+            @foreach (var level in item.Report.AnswerPercentLevels)
+            {
+                <li>@level.GoodAnswersPercent</li>
+            }
+        </ul>
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.StartDate)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.EndDate)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.RecruitmentAgent.User.LastName)
+    </td>
+    <td>
+        @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
+        @Html.ActionLink("Details", "Details", new { id = item.Id }) |
+        @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+    </td>
+</tr>
+}
+
+</table>
