@@ -67,6 +67,10 @@
     <Compile Include="Migrations\202106131039340_RequiredProperties.designer.cs">
       <DependentUpon>202106131039340_RequiredProperties.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202106141605447_AddReportPropertyToQuizz.cs" />
+    <Compile Include="Migrations\202106141605447_AddReportPropertyToQuizz.designer.cs">
+      <DependentUpon>202106141605447_AddReportPropertyToQuizz.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Answer.cs" />
     <Compile Include="Models\AnswerPercentLevel.cs" />
@@ -93,6 +97,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202106131039340_RequiredProperties.resx">
       <DependentUpon>202106131039340_RequiredProperties.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202106141605447_AddReportPropertyToQuizz.resx">
+      <DependentUpon>202106141605447_AddReportPropertyToQuizz.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup />

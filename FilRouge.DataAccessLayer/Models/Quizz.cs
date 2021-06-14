@@ -38,5 +38,7 @@ namespace FilRouge.DataAccessLayer.Models
 
         [Required]
         public ICollection<Answer> Answers { get; set; }
+
+        public Report Report { get; set; }
     }
 }
