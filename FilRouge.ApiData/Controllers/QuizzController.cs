@@ -34,6 +34,7 @@ namespace FilRouge.ApiData.Controllers
                 RecruitmentAgent = new RecruitmentAgent
                 {
                     Id = p.RecruitmentAgent.Id,
+
                     User = new User
                     {
                         Id = p.RecruitmentAgent.User.Id,

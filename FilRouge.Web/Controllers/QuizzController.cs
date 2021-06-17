@@ -18,9 +18,28 @@ namespace FilRouge.Web.Controllers
         private readonly QuizzService quizservice = new QuizzService();
 
         // GET: Quizz
-        public async Task<ActionResult> Index()
+        public async Task<ActionResult> Index(/*string sortOrder*/)
         {
-            
+        
+
+            //ViewBag.NameSortParm = String.IsNullOrEmpty(sortOrder) ? "GlobalGoodAnswersPercent" : "";
+            //ViewBag.DateSortParm = sortOrder == "Lastname" ? "lastname_desc" : "Lastname";
+            //var listQuiz = await quizservice.GetAll().ConfigureAwait(false);
+            //switch (sortOrder)
+            //{
+            //    case "GlobalGoodAnswersPercent":
+            //        listQuiz = (IList<Quizz>)listQuiz.OrderBy(s => s.Report.GlobalGoodAnswersPercent);
+            //        break;
+            //    case "Lastname":
+            //        listQuiz = (IList<Quizz>)listQuiz.OrderBy(s => s.Candidate.User.LastName);
+            //        break;
+            //    case "lastname_desc":
+            //        listQuiz = (IList<Quizz>)listQuiz.OrderByDescending(s => s.Candidate.User.LastName);
+            //        break;
+            //    default:
+            //        listQuiz = (IList<Quizz>)listQuiz.OrderByDescending(s => s.Report.GlobalGoodAnswersPercent);
+            //        break;
+            //}
             return View(await quizservice.GetAll());
         }
 
