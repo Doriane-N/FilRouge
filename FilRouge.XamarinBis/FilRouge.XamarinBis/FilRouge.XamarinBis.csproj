@@ -18,12 +18,14 @@
   </ItemGroup>
 
   <ItemGroup>
-    <EmbeddedResource Update="QuizzList.xaml">
-      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
-    </EmbeddedResource>
+    <Reference Include="System.Web.Helpers.Crypto">
+      <HintPath>..\..\FilRouge.Web\Bin\System.Web.Helpers.Crypto.dll</HintPath>
+    </Reference>
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Services\" />
+    <EmbeddedResource Update="QuizzList.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
   </ItemGroup>
 </Project>

@@ -3,12 +3,31 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="FilRouge.XamarinBis.MainPage">
 
-    <StackLayout Orientation="Vertical">
+    <StackLayout>
+        <StackLayout Orientation="Vertical">
         <Label Text="Identifiant"/>
         <Entry x:Name="login" Placeholder="Login" ReturnType="Next"/>
         <Label Text="Mot de passe"/>
         <Entry x:Name="password" IsPassword="True" Placeholder="Mot de passe" ReturnType="Send" Keyboard="Default"/>
         <Button Clicked="Connection_Clicked" Text="se connecter"/>
+    </StackLayout>
+
+        <ListView x:Name="listAgents" HasUnevenRows="True">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <ViewCell>
+                        <StackLayout Orientation="Vertical" HorizontalOptions="FillAndExpand">
+                            <StackLayout Orientation="Horizontal">
+                                <Label Text="{Binding Id}"/>
+                                <Label Text="{Binding FirstName}"/>
+                                <Label Text="{Binding LastName}" HorizontalOptions="EndAndExpand"/>
+                                <Label Text="{Binding Email}"/>
+                            </StackLayout>
+                        </StackLayout>
+                    </ViewCell>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
     </StackLayout>
 
 </ContentPage>
