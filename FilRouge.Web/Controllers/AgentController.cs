@@ -45,7 +45,7 @@ namespace FilRouge.Web.Controllers
                     Session["Admin"] = "admin";
                 }
 
-                return RedirectToAction("Index", "Home");
+                return RedirectToAction("Index", "Quizz");
 
             }
 

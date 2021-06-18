@@ -52,6 +52,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AccessLayers\QuestionAccessLayer.cs" />
+    <Compile Include="AccessLayers\QuizzAccessLayer.cs" />
     <Compile Include="AccessLayers\RecruitmentAgentAccessLayer.cs" />
     <Compile Include="AccessLayers\UserAccessLayer.cs" />
     <Compile Include="Context\FilRougeContext.cs" />

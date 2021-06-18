@@ -12,31 +12,26 @@ namespace FilRouge.DataAccessLayer.AccessLayers
     public class QuizzAccessLayer
     {
         private readonly FilRougeContext context;
-        private readonly DbSet<Quizz> quizzs;
+        private readonly DbSet<Quizz> report;
 
         public QuizzAccessLayer()
         {
             this.context = new FilRougeContext();
-            this.quizzs = this.context.Set<Quizz>();
+            this.report = this.context.Set<Quizz>();
         }
 
         public List<Quizz> GetAll()
         {
-            return this.quizzs.AsQueryable().AsNoTracking()
-                .Include(q => q.Questions)
-                .Include(q => q.Answers)
-                //.Include(q => q.Report)
-                //.Include(q => q.IngredientPizzas.Select(ip => ip.Ingredient))
+            return this.report.AsQueryable().AsNoTracking()
+                .Include(a => a.Report)
+                .Include(a => a.Report.AnswerPercentLevels)
+                .Include(a => a.RecruitmentAgent)
+                .Include(a => a.RecruitmentAgent.User)
+                .Include(a => a.DifficultyLevel)
+                .Include(a => a.Candidate)
+                .Include(a => a.Candidate.User)
+                
                 .ToList();
-        }
-
-        public Quizz Get(string id)
-        {
-            return this.quizzs.AsQueryable().AsNoTracking()
-                 //.Include(q => q.Dough)
-                 //.Include(q => q.IngredientPizzas)
-                 //.Include(q => q.IngredientPizzas.Select(ip => ip.Ingredient))
-                 .FirstOrDefault(q => q.Id == id);
         }
 
     }

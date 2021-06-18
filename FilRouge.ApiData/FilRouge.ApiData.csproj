@@ -135,10 +135,20 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AgentsController.cs" />
+    <Compile Include="Controllers\QuizzController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\Answer.cs" />
+    <Compile Include="Models\AnswerPercentLevel.cs" />
+    <Compile Include="Models\Candidate.cs" />
+    <Compile Include="Models\DifficultyLevel.cs" />
+    <Compile Include="Models\Question.cs" />
+    <Compile Include="Models\Quizz.cs" />
+    <Compile Include="Models\RecruitmentAgent.cs" />
+    <Compile Include="Models\Report.cs" />
+    <Compile Include="Models\User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -155,8 +165,8 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Content\" />
-    <Folder Include="Models\" />
     <Folder Include="Views\Login\" />
+    <Folder Include="Views\Quizz\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
