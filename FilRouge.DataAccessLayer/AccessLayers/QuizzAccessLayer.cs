@@ -12,17 +12,17 @@ namespace FilRouge.DataAccessLayer.AccessLayers
     public class QuizzAccessLayer
     {
         private readonly FilRougeContext context;
-        private readonly DbSet<Quizz> report;
+        private readonly DbSet<Quizz> quizzSet;
 
         public QuizzAccessLayer()
         {
             this.context = new FilRougeContext();
-            this.report = this.context.Set<Quizz>();
+            this.quizzSet = this.context.Set<Quizz>();
         }
 
         public List<Quizz> GetAll()
         {
-            return this.report.AsQueryable().AsNoTracking()
+            return this.quizzSet.AsQueryable().AsNoTracking()
                 .Include(a => a.Report)
                 .Include(a => a.Report.AnswerPercentLevels)
                 .Include(a => a.RecruitmentAgent)
@@ -32,6 +32,13 @@ namespace FilRouge.DataAccessLayer.AccessLayers
                 .Include(a => a.Candidate.User)
                 
                 .ToList();
+        }
+        public async Task<bool> AddAsync(Quizz quizz)
+        {
+            this.quizzSet.Add(quizz);
+            var result = await this.context.SaveChangesAsync().ConfigureAwait(false);
+
+            return result > 0;
         }
 
     }

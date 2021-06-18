@@ -51,6 +51,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AccessLayers\DifficultyLevelAccessLayer.cs" />
     <Compile Include="AccessLayers\QuestionAccessLayer.cs" />
     <Compile Include="AccessLayers\QuizzAccessLayer.cs" />
     <Compile Include="AccessLayers\RecruitmentAgentAccessLayer.cs" />

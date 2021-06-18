@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
+using System.Text;
 using System.Threading.Tasks;
 using System.Web;
 
@@ -32,6 +33,18 @@ namespace FilRouge.Web.Services
             }
 
             return null;
+        }
+        public async Task<bool> Create(Quizz quizz)
+        {
+            var content = new StringContent(JsonConvert.SerializeObject(quizz), Encoding.UTF8, "application/json");
+            var response = await this.httpClient.PostAsync($"/api/quizz", content);
+
+            if (response.IsSuccessStatusCode)
+            {
+                return true;
+            }
+
+            return false;
         }
     }
 }
