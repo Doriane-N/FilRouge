@@ -164,7 +164,7 @@ namespace FilRouge.Web.Controllers
         // GET: Agents/EditPassword
         public async Task<ActionResult> EditPassword()
         {
-            var agent = await agentService.Get(Int32.Parse(Session["Id"].ToString()));
+            var agent = await agentService.Get(int.Parse(Session["Id"].ToString()));
             if (agent == null)
             {
                 return HttpNotFound();
@@ -175,27 +175,30 @@ namespace FilRouge.Web.Controllers
 
         //Méthode de modification du mot de passe accessible par l'agent
         // POST: Agents/EditPassword
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public async Task<ActionResult> EditPassword()
-        //{
-        //    if (ModelState.IsValid)
-        //    {
-        //        HttpResponseMessage response = await agentService.Update(agent);
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> EditPassword(RecruitmentAgent agent, FormCollection fc)
+        {
+            var foundAgent = await agentService.Get(agent.Id);
 
-        //        if (response.StatusCode.Equals(HttpStatusCode.Conflict))
-        //        {
-        //            ModelState.AddModelError(nameof(RecruitmentAgent.Login), "Login existe déjà");
-        //        }
-        //        else
-        //        {
-        //            ModelState.AddModelError("", "L'ajout n'a pas été effectué");
-        //        }
+            if (foundAgent != null && Crypto.VerifyHashedPassword(foundAgent.Password, agent.Password))
+            {
+                var hash = Crypto.HashPassword(fc["NewPswd"]);
+                foundAgent.Password = hash;
 
-        //    }
+                HttpResponseMessage response = await agentService.Update(foundAgent.Id, foundAgent);
+                if (response.IsSuccessStatusCode)
+                {
+                    TempData["success"] = "Votre mot de passe est mis à jour";
+                }
+                else
+                {
+                    ModelState.AddModelError("", "La modification n'a pas été effectuée");
+                }
+            }
 
-        //    return View(agent);
-        //}
+            return View(agent);
+        }
 
         // GET: Agents/Delete/{id}
         public async Task<ActionResult> Delete(int? id)

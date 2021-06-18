@@ -68,10 +68,16 @@ namespace FilRouge.DataAccessLayer.AccessLayers
             agentToEdit.User.LastName = agent.User.LastName;
             agentToEdit.User.Email = agent.User.Email;
 
+            if (agent.Password != null)
+            {
+                agentToEdit.Password = agent.Password;
+            }
+
             var result = await this.context.SaveChangesAsync().ConfigureAwait(false);
 
             return result > 0;
         }
+
 
         public async Task<bool> DeleteAsync(int id)
         {

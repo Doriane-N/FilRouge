@@ -18,7 +18,7 @@ namespace FilRouge.ApiData.Controllers
         private readonly UserAccessLayer userAccessLayer = new UserAccessLayer();
 
 
-        // GET api/agent
+        // GET api/agents/login
         [HttpGet]
         public IHttpActionResult Get(string login)
         {
@@ -29,7 +29,7 @@ namespace FilRouge.ApiData.Controllers
             return this.Ok(result);
         }
 
-        // GET api/agent
+        // GET api/agents/id
         [HttpGet]
         public IHttpActionResult Get(int id)
         {
@@ -56,6 +56,7 @@ namespace FilRouge.ApiData.Controllers
             return this.Ok(result);
         }
 
+        // POST api/agents
         [HttpPost]
         public async Task<IHttpActionResult> Create([FromBody] RecruitmentAgent agent)
         {
@@ -81,6 +82,7 @@ namespace FilRouge.ApiData.Controllers
             return this.Ok("created");
         }
 
+        // PUT api/agents/{id}
         [HttpPut]
         public async Task<IHttpActionResult> Update(int id, [FromBody] RecruitmentAgent agent)
         {
@@ -96,6 +98,7 @@ namespace FilRouge.ApiData.Controllers
                 Id = agent.Id,
                 IsAdmin = agent.IsAdmin,
                 Login = agent.Login,
+                Password = agent.Password,
                 User = new User
                 {
                     FirstName = agent.User.FirstName,
@@ -109,6 +112,7 @@ namespace FilRouge.ApiData.Controllers
             return this.Ok("updated");
         }
 
+        // DELETE api/agents/{id}
         [HttpDelete]
         public async Task<IHttpActionResult> Delete(int id)
         {
