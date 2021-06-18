@@ -5,9 +5,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Xamarin.Forms;
-using Xamarin.Essentials;
 
-namespace FilRouge.Xamarin
+namespace FilRouge.XamarinBis
 {
     public partial class MainPage : ContentPage
     {
