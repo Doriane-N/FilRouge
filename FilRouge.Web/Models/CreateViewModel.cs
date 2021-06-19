@@ -12,5 +12,9 @@ namespace FilRouge.Web.Models
         public Quizz Quizz { get; set; }
         public SelectList AvailableLevels { get; set; }
         public SelectList AvailableAgents { get; set; }
+        public int SelectedAgentId { get; set; }
+        public int SelectedDifficultyId { get; set; }
+        
+        
     }
 }
