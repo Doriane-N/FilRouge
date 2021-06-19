@@ -10,11 +10,18 @@ namespace FilRouge.DataAccessLayer.Models
 {
     public class Question
     {
+
+        public Question()
+        {
+            Answers = new List<Answer>();
+        }
+
         [Key]
         public int Id { get; set; }
 
         [Required]
         [MaxLength(1000)]
+        [Display(Name = "Libellé")]
         public string Text { get; set; }
 
         [Required]
@@ -26,12 +33,23 @@ namespace FilRouge.DataAccessLayer.Models
         public DifficultyLevel DifficultyLevel { get; set; }
 
         [Required]
-        public int Type { get; set; }
+        [Display(Name = "Type de réponse")]
+        public QuestionType Type { get; set; }
 
         [Required]
         public ICollection<Answer> Answers { get; set; }
 
         public ICollection<Quizz> Quizzs { get; set; }
 
+    }
+
+    public enum QuestionType
+    {
+        [Display(Name = "plusieurs réponses possibles")]
+        MultipleChoice,
+        [Display(Name = "une seule bonne réponse")]
+        SingleChoice,
+        [Display(Name = "réponse libre")]
+        FreeAnswer
     }
 }
