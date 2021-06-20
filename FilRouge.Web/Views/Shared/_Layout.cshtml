@@ -25,11 +25,12 @@
                 {
                 <ul class="nav navbar-nav">
 
-                    <li>@Html.ActionLink("Accueil", "Index", "Quizz")</li>
+                    <li>@Html.ActionLink("Quiz", "Index", "Quizz")</li>
 
                     @if (Session["Admin"] != null)
                     {
                         <li>@Html.ActionLink("Agents", "Manage", "Agent")</li>
+                        <li>@Html.ActionLink("Créer une question", "Create", "Question")</li>
                     }
 
                 </ul>
