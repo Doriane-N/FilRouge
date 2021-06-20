@@ -3,6 +3,7 @@ using FilRouge.DataAccessLayer.AccessLayers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Http;
 
@@ -60,6 +61,39 @@ namespace FilRouge.ApiData.Controllers
             });
 
             return this.Ok(result);
+        }
+
+        [HttpPost]
+        public async Task<IHttpActionResult> Create([FromBody] Quizz quizz)
+        {
+            var quizzToAdd = new DataAccessLayer.Models.Quizz
+            {
+                StartDate = quizz.StartDate,
+                QuestionsNb = quizz.QuestionsNb,               
+                DifficultyLevel = new DataAccessLayer.Models.DifficultyLevel
+                {
+                    Level = quizz.DifficultyLevel.Level
+                },
+                RecruitmentAgent = new DataAccessLayer.Models.RecruitmentAgent
+                {
+                    User = new DataAccessLayer.Models.User
+                    {
+                        LastName = quizz.RecruitmentAgent.User.LastName
+                    }
+                },
+                AnsweredQuestionsNb = 0,
+                Candidate = new DataAccessLayer.Models.Candidate
+                {
+                    User = new DataAccessLayer.Models.User
+                    {
+                        LastName = quizz.Candidate.User.LastName,
+                        FirstName = quizz.Candidate.User.FirstName
+                    }
+                }
+            };
+
+            await quizzAccessLayer.AddAsync(quizzToAdd);
+            return this.Ok("created");
         }
     }
 }

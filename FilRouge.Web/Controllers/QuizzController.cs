@@ -10,17 +10,20 @@ using System.Web.Mvc;
 using FilRouge.DataAccessLayer.Context;
 using FilRouge.DataAccessLayer.Models;
 using FilRouge.Web.Services;
+using FilRouge.Web.Models;
 
 namespace FilRouge.Web.Controllers
 {
     public class QuizzController : Controller
-    {       
+    {
         private readonly QuizzService quizservice = new QuizzService();
+        private readonly AgentService agentservice = new AgentService();
+        private readonly DifficultyLevelService difficultylevel = new DifficultyLevelService();
 
         // GET: Quizz
         public async Task<ActionResult> Index(/*string sortOrder*/)
         {
-        
+
 
             //ViewBag.NameSortParm = String.IsNullOrEmpty(sortOrder) ? "GlobalGoodAnswersPercent" : "";
             //ViewBag.DateSortParm = sortOrder == "Lastname" ? "lastname_desc" : "Lastname";
@@ -43,18 +46,43 @@ namespace FilRouge.Web.Controllers
             return View(await quizservice.GetAll());
         }
 
-        
 
-        //// GET: Quizzs/Create
-        //public ActionResult Create()
-        //{
-        //    ViewBag.Id = new SelectList(db.Reports, "Id", "Id");
-        //    return View();
-        //}
 
-        //// POST: Quizzs/Create
-        //// Afin de déjouer les attaques par survalidation, activez les propriétés spécifiques auxquelles vous voulez établir une liaison. Pour 
-        //// plus de détails, consultez https://go.microsoft.com/fwlink/?LinkId=317598.
+        //// GET: Quizz/Create
+        public async Task<ActionResult> Create()
+        {
+            var agents = new SelectList(await agentservice.GetAll(), "Id", "User.LastName");
+            var levels = new SelectList(await difficultylevel.GetAll(), "Id", "Level");
+            var viewmodel = new CreateViewModel
+            {
+                AvailableAgents = agents,
+                AvailableLevels = levels
+            };
+            return View(viewmodel);
+        }
+
+        // POST: Quizz/Create
+        // Afin de déjouer les attaques par survalidation, activez les propriétés spécifiques auxquelles vous voulez établir une liaison. Pour 
+        // plus de détails, consultez https://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> Create(CreateViewModel viewmodel)
+        {
+            viewmodel.Quizz.StartDate = DateTime.Now;
+            if (ModelState.IsValid)
+            {
+                viewmodel.Quizz.RecruitmentAgent = new RecruitmentAgent { Id = viewmodel.SelectedAgentId };
+                viewmodel.Quizz.DifficultyLevel = new DifficultyLevel { Id = viewmodel.SelectedDifficultyId };
+
+
+                if (await quizservice.Create(viewmodel.Quizz))
+                {
+                    Content("<script language='javascript' type='text/javascript'>alert('Quiz ajouté');</script>");
+                    return RedirectToAction("Index");
+                }
+            }
+            return View(viewmodel);
+        }
         //[HttpPost]
         //[ValidateAntiForgeryToken]
         //public async Task<ActionResult> Create([Bind(Include = "Id,StartDate,EndDate,QuestionsNb,AnsweredQuestionsNb")] Quizz quizz)
