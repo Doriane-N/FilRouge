@@ -27,7 +27,7 @@ namespace FilRouge.DataAccessLayer.Models
 
         [Required]
         [Display(Name = "Mot de passe")]
-        [DataType(DataType.Password), MaxLength(255)]
+        [DataType(DataType.Password), MaxLength(255), MinLength(3)]
         public string Password { get; set; }
 
         public ICollection<Quizz> Quizzs { get; set; }

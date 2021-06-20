@@ -37,7 +37,7 @@
 
                 if (adminSession == null)
                 {
-                    return RedirectToAction("Index", "Home");
+                    return RedirectToAction("Index", "Quizz");
                 }
             }
             return await func.Invoke();

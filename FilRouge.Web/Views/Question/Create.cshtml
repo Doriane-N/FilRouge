@@ -1,0 +1,95 @@
+﻿@model FilRouge.DataAccessLayer.Models.Question
+
+@{
+    ViewBag.Title = "Create";
+}
+
+<h2>Créer une question</h2>
+
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    @Html.HiddenFor(model => model.Id)
+
+<div class="form-horizontal">
+
+    <hr />
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    <div class="form-group">
+        @Html.LabelFor(model => model.Text, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.TextAreaFor(model => model.Text, 5, 80, htmlAttributes: new { style = "resize: none; min-width:90%" })
+            @*@Html.ValidationMessageFor(model => model.Text, "", new { @class = "text-danger" })*@
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.Type, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EnumDropDownListFor(model => model.Type, new { onchange = "typeUpdated(this)" })
+            @Html.ValidationMessageFor(model => model.Type, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    @if (Model != null)
+    {
+
+        var i = 0;
+        foreach (var answer in Model.Answers)
+        {
+
+            @Html.HiddenFor(model => answer.Id)
+            @Html.HiddenFor(model => answer.Question)
+            <div class="form-group">
+                @Html.LabelFor(model => answer.Text, "Réponse " + (@i + 1), htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+
+                    @Html.TextArea("Answers[" + i + "].Text", answer.Text, 4, 80, htmlAttributes: new { style = "resize: none; min-width:90%" })
+
+                    @Html.LabelFor(model => answer.IsGood, "Est une bonne réponse")
+                    @Html.CheckBox("Answers[" + i + "].IsGood", answer.IsGood)
+                    <button type="submit" name="rmAnswer" value="@i" class="btn btn-default cancel" action="@Url.Action("RmAnswer", "QuestionController")">Supprimer la réponse</button>
+
+                </div>
+                @{i++;}
+            </div>
+        }
+    }
+
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" name="addAnswer" value="Ajouter une réponse" class="btn btn-default cancel" action="@Url.Action("AddAnswer", "QuestionController")" />
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" value="Valider" class="btn btn-default cancel" />
+        </div>
+    </div>
+
+</div>
+}
+<div>
+    @Html.ActionLink("Retour", "Index", "Question")
+</div>
+        
+<script>
+    function typeUpdated(list) {
+        var disable = false;
+        if (list.value == 2) {
+            disable = true;
+        }
+        polls = document.querySelectorAll('[id ^= "Answers"]');
+        polls.forEach(answer => {
+            answer.disabled = disable;
+        })
+    }
+    typeUpdated(document.getElementById("Type"));
+</script>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
